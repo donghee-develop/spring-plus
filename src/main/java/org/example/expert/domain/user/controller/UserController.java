@@ -30,4 +30,8 @@ public class UserController {
     public void changeRole(@AuthenticationPrincipal AuthUser authUser, @RequestBody UserRoleChangeRequest userRoleChangeRequest){
         userService.changeRole(authUser.getId(),userRoleChangeRequest);
     }
+    @GetMapping("/users/{nickname}")
+    public ResponseEntity<UserResponse> getUserByNickname(@PathVariable String nickname) {
+        return ResponseEntity.ok(userService.getUserByNickname(nickname));
+    }
 }

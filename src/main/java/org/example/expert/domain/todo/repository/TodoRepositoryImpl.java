@@ -17,6 +17,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class TodoRepositoryImpl implements TodoRepoQueryDSL{
@@ -89,4 +90,18 @@ public class TodoRepositoryImpl implements TodoRepoQueryDSL{
 
         return new PageImpl<>(content, pageable, total);
     }
+    @Override
+    public Optional<Todo> findByIdWithUser(Long todoId) {
+        QTodo todo = QTodo.todo;
+
+        Todo result = queryFactory
+                .selectFrom(todo)
+                .leftJoin(todo.user).fetchJoin()
+                .where(todo.id.eq(todoId))
+                .fetchOne();
+
+        return Optional.ofNullable(result);
+    }
+
+
 }

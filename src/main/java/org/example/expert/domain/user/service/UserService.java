@@ -57,4 +57,10 @@ public class UserService {
         user.updateRole(UserRole.valueOf(userRoleChangeRequest.getRole()));
         userRepository.save(user);
     }
+
+
+    public UserResponse getUserByNickname(String nickname) {
+        User user = userRepository.findByNickname(nickname).orElseThrow(() -> new InvalidRequestException("User not found"));
+        return new UserResponse(user.getId(), user.getEmail(), user.getNickname());
+    }
 }

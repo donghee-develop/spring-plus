@@ -11,7 +11,9 @@ import org.example.expert.domain.user.enums.UserRole;
 @Getter
 @Entity
 @NoArgsConstructor
-@Table(name = "users")
+@Table(name = "users", indexes = {
+        @Index(name = "idx_user_nickname", columnList = "nickname")
+})
 @ToString
 public class User extends Timestamped {
 
@@ -32,7 +34,7 @@ public class User extends Timestamped {
         this.userRole = userRole;
     }
 
-    private User(Long id, String email, String nickname , UserRole userRole) {
+    public User(Long id, String email, String nickname , UserRole userRole) {
         this.id = id;
         this.email = email;
         this.nickname = nickname;
